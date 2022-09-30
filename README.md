@@ -1,2 +1,1 @@
-# weather_app
-# master_branch
+# weather_app -> master_branch
