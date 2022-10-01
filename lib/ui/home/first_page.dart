@@ -52,9 +52,8 @@ class _FirstPageState extends State<FirstPage> {
                     )
                   ],
                 ),
-                child: TopView(),
+                child: const TopView(),
               ),
-
               const BottomView(),
             ],
           ),

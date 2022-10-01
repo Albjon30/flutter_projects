@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:prototype/models/hourly_weather.dart';
 import 'package:prototype/utils/icon_selection.dart';
-import 'package:prototype/data/service/hourly_weather_service.dart';
+import 'package:prototype/data/service/hourlyWeather_service.dart';
 
 class BottomView extends StatefulWidget {
   const BottomView({Key? key}) : super(key: key);
@@ -13,9 +14,13 @@ class BottomView extends StatefulWidget {
 class _BottomViewState extends State<BottomView> {
   HourlyWeather? hourlyWeather;
   var isLoaded = false;
+  LocationData? locationData;
+
+
 
   @override
   void initState() {
+    print("2");
     getHData();
     super.initState();
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:prototype/data/service/current_weather_service.dart';
+import 'package:prototype/data/service/currentWeather_service.dart';
 import 'package:prototype/models/current_weather.dart';
 import 'package:prototype/utils/icon_selection.dart';
 
@@ -18,6 +18,7 @@ class _TopViewState extends State<TopView> {
 
   @override
   void initState() {
+    print("1");
     getData();
     super.initState();
   }
