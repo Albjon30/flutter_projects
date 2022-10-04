@@ -37,7 +37,7 @@ String getWeatherIcon(String icon) {
     case "50n":
       return 'images/50n.png';
     case "null":
-      return '';
+      return 'images/50px.png';
   }
   return icon;
 }

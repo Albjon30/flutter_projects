@@ -16,11 +16,8 @@ class _BottomViewState extends State<BottomView> {
   var isLoaded = false;
   LocationData? locationData;
 
-
-
   @override
   void initState() {
-    print("2");
     getHData();
     super.initState();
   }
@@ -68,13 +65,13 @@ class _BottomViewState extends State<BottomView> {
           horizontal: 10,
           vertical: 5,
         ),
-        width: 400,
+        width: MediaQuery.of(context).size.width * 1.0,
         height: MediaQuery.of(context).size.height * 0.23,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: 40,
           itemBuilder: (context, index) {
-            var hW =hourlyWeather?.list[index];
+            var hW = hourlyWeather?.list[index];
             return Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.all(4),
@@ -83,30 +80,33 @@ class _BottomViewState extends State<BottomView> {
                   border: Border.all(color: Colors.white10)),
               child: Column(
                 children: [
-                  Text(
-                    '${hW?.main.temp}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
                   SizedBox(
                     width: 50,
                     height: 50,
                     child: Image.asset(
-                      getWeatherIcon(
-                          '${hW?.weather[0].icon}'),
+                      getWeatherIcon('${hW?.weather[0].icon}'),
                       scale: 20,
+                    ),
+                  ),
+                  Text(
+                    '${hW?.main.temp.toStringAsFixed(1)}\u00b0',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    '${hW?.weather[0].main}',
+                    style: const TextStyle(
+                      color: Colors.white38,
+                    ),
+                  ),
+                  Text(
+                    '${hW?.wind.speed.toStringAsFixed(1)}km/h',
+                    style: const TextStyle(
+                      color: Colors.white38,
                     ),
                   ),
                   Text(
                     '${hW?.dtTxt.hour}:00',
                     style: const TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    '${hW?.weather[0].description}',
-                    style: const TextStyle(color: Colors.white38,),
-                  ),
-                  Text(
-                    '${hW?.weather[0].description}',
-                    style: const TextStyle(color: Colors.white38,),
                   ),
                 ],
               ),
