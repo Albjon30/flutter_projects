@@ -20,7 +20,6 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool selected = false;
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -29,7 +28,7 @@ class _FirstPageState extends State<FirstPage> {
           child: Column(
             children: const [
               AnimatedContainerApp(),
-             // BottomView(),
+              BottomView(),
             ],
           ),
         ),
@@ -37,10 +36,3 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 }
-
-//WeatherStatus().getWeatherIcon('${weather?.weather[0].icon}'),
-//Text(
-//                         weather?.name ?? '',
-//                         style: const TextStyle(
-//                             fontSize: 20, fontWeight: FontWeight.bold),
-//                       ),

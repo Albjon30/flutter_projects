@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:prototype/models/hourly_weather.dart';
 import 'package:prototype/ui/views/widgets/top_view.dart';
 import 'package:prototype/ui/views/widgets/top_view_collapsed.dart';
 import 'package:intl/intl.dart';
-import 'package:prototype/data/service/currentWeather_service.dart';
+import 'package:prototype/data/service/weather_service.dart';
 import 'package:prototype/models/current_weather.dart';
 import 'package:prototype/ui/views/widgets/top_view_header.dart';
 import 'package:prototype/utils/icon_selection.dart';
+
 
 class AnimatedContainerApp extends StatefulWidget {
   const AnimatedContainerApp({super.key});
@@ -19,7 +21,9 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
   CurrentWeather? weather;
   var isLoaded = false;
   var date = DateTime.now();
-
+  var _didFinishAnimating = false;
+  CurrentWeather? current;
+  HourlyWeather?  hourly;
 
   @override
   void initState() {
@@ -36,9 +40,9 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -46,6 +50,11 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
         });
       },
       child: AnimatedContainer(
+        onEnd: () {
+          setState(() {
+            _didFinishAnimating = !_didFinishAnimating;
+          });
+        },
         height: selected
             ? MediaQuery.of(context).size.height * 0.40
             : MediaQuery.of(context).size.height * 0.70,
@@ -72,30 +81,49 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
         ),
         curve: Curves.ease,
         duration: const Duration(seconds: 20),
-        child: selected
-            ? Container(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        child: !selected
+            ? _didFinishAnimating
+                ? Container(
+                    padding: const EdgeInsets.all(11),
+                    child: Column(
                       children: [
-                        header(weather?.name ?? ''),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            header(weather?.name ?? ''),
+                          ],
+                        ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 25,
+                  )
+                : Container(
+                    padding: const EdgeInsets.all(11),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            header(weather?.name ?? ''),
+                          ],
+                        ),
+                        SizedBox(
+                          height: selected
+                              ? MediaQuery.of(context).size.height * 0.40
+                              : MediaQuery.of(context).size.height * 0.59,
+                          child: topView(
+                            weather?.main!.temp.toStringAsFixed(1) ?? '',
+                            weather?.weather![0].description.toString() ?? '',
+                            DateFormat('EEEE, d MMM').format(date),
+                            weather?.wind!.speed.toStringAsFixed(1) ?? '',
+                            weather?.main!.humidity.toString() ?? '',
+                            getWeatherIcon('${weather?.weather![0].icon}') ,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      child: topViewCollapsed(
-                        getWeatherIcon('${weather?.weather![0].icon}'),
-                      ),
-                    )
-                  ],
-                ),
-              )
+                  )
             : Container(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(11),
                 child: Column(
                   children: [
                     Row(
@@ -104,16 +132,18 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                         header(weather?.name ?? ''),
                       ],
                     ),
-                    Container(
-                      child: topView(
-                        weather?.main!.temp.toStringAsFixed(1) ?? '',
-                        weather?.weather![0].description.toString() ?? '',
-                        DateFormat('EEEE, d MMM').format(date),
-                        weather?.wind!.speed.toStringAsFixed(1) ?? '',
-                        weather?.main!.humidity.toString() ?? '',
-                        getWeatherIcon('${weather?.weather![0].icon}') ?? '',
-                      ),
-                    )
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                           const SizedBox(
+                              height: 35,
+                            ),
+                            topViewCollapsed(weather?.weather![0].icon ??''),
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

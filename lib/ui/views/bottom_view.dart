@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:prototype/models/hourly_weather.dart';
 import 'package:prototype/utils/icon_selection.dart';
-import 'package:prototype/data/service/hourlyWeather_service.dart';
+import 'package:prototype/data/service/weather_service.dart';
 
 class BottomView extends StatefulWidget {
   const BottomView({Key? key}) : super(key: key);
@@ -14,7 +14,6 @@ class BottomView extends StatefulWidget {
 class _BottomViewState extends State<BottomView> {
   HourlyWeather? hourlyWeather;
   var isLoaded = false;
-  LocationData? locationData;
 
   @override
   void initState() {
@@ -84,28 +83,28 @@ class _BottomViewState extends State<BottomView> {
                     width: 50,
                     height: 50,
                     child: Image.asset(
-                      getWeatherIcon('${hW?.weather[0].icon}'),
+                      getWeatherIcon(hW?.weather[0].icon ??''),
                       scale: 20,
                     ),
                   ),
                   Text(
-                    '${hW?.main.temp.toStringAsFixed(1)}\u00b0',
+                    '${hW?.main.temp.toStringAsFixed(1)?? ''}\u00b0',
                     style: const TextStyle(color: Colors.white),
                   ),
                   Text(
-                    '${hW?.weather[0].main}',
+                    hW?.weather[0].main ?? '',
                     style: const TextStyle(
                       color: Colors.white38,
                     ),
                   ),
                   Text(
-                    '${hW?.wind.speed.toStringAsFixed(1)}km/h',
+                    '${hW?.wind.speed.toStringAsFixed(1) ?? ''}km/h',
                     style: const TextStyle(
                       color: Colors.white38,
                     ),
                   ),
                   Text(
-                    '${hW?.dtTxt.hour}:00',
+                    '${hW?.dtTxt.hour ?? ''}:00',
                     style: const TextStyle(color: Colors.white),
                   ),
                 ],
