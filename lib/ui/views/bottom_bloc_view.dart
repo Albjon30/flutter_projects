@@ -5,7 +5,6 @@ import 'package:prototype/bloc/app_events.dart';
 import 'package:prototype/bloc/app_state.dart';
 import 'package:prototype/extensions/stream/start_with.dart';
 import 'package:prototype/ui/views/widgets/bottom_view.dart';
-import 'package:prototype/ui/views/widgets/top_container.dart';
 
 class BottomBlocView<T extends AppBloc> extends StatelessWidget {
   const BottomBlocView({Key? key}) : super(key: key);

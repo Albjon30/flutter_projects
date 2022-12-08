@@ -10,9 +10,10 @@ Widget topView(
 
 ) {
   return Column(
+    
     children: [
       const SizedBox(
-        height: 20,
+        height: 30,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,

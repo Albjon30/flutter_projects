@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prototype/api/api_repository.dart';
 import 'package:prototype/bloc/app_bloc.dart';
 import 'package:prototype/bloc/app_events.dart';
 import 'package:prototype/bloc/app_state.dart';
 import 'package:prototype/extensions/stream/start_with.dart';
+import 'package:prototype/models/weather.dart';
 import 'package:prototype/ui/views/widgets/top_container.dart';
 
 class TopBlocView<T extends AppBloc> extends StatelessWidget {
@@ -11,7 +13,7 @@ class TopBlocView<T extends AppBloc> extends StatelessWidget {
 
   void startUpdatingBloc(BuildContext context) {
     Stream.periodic(
-      const Duration(seconds: 1),
+      const Duration(minutes: 10),
       (_) => const LoadCurrentWeatherEvent(),
     ).startWith(const LoadCurrentWeatherEvent()).forEach((event) {
       context.read<T>().add(

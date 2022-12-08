@@ -1,84 +1,39 @@
 import 'dart:convert';
-
+import 'dart:developer' as devtools show log;
 import 'package:http/http.dart' as http;
 import 'package:prototype/location/location.dart';
-import 'package:prototype/models/current_weather.dart';
-import 'package:prototype/models/weather.dart';
-import 'package:prototype/utils/weatherUtils.dart';
-import 'package:prototype/models/hourly_weather.dart';
 
 Position position = Position();
 
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
+
 class ApiProvider {
-  final pos = position.getUserLocation();
-  Future<CurrentWeather> getCurrentWeather() async {
+  // final pos = position.getUserLocation();
+  final String _baseUrl = "https://api.openweathermap.org/data/2.5/";
+
+  Future<dynamic> get(String category) async {
+    var responseJson;
+
     try {
-      await pos;
       var client = http.Client();
-      var uri =
-          Uri.parse(prepareWeatherUrl(position.longitude!, position.latitude!));
-      var response =
-          await client.get(uri, headers: {'Content-Type': 'application/json'});
-
-      var json = response.body;
-      return weatherFromJson(json);
+      var url_assembler = '$_baseUrl$category';
+      var uri = Uri.parse(url_assembler);
+      final response = await client.get(uri);
+      responseJson = _response(response);
     } catch (e) {
-      print("Exception occured: $e");
+      throw e;
     }
-    throw Exception("Failed to load load 1");
+    return responseJson;
   }
 
-  Future<HourlyWeather> getHourlyWeather() async {
-    // await Future.delayed(const Duration(seconds: 2));
-    try {
-      await pos;
-      var client = http.Client();
-      var uri = Uri.parse(
-          prepareHourlyWeather(position.longitude!, position.latitude!));
-      var response =
-          await client.get(uri, headers: {'Content-Type': 'application/json'});
-
-      var json = response.body;
-      return hourlyWeatherFromJson(json);
-    } catch (e) {
-      print("Exception occured: $e");
+  dynamic _response(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+        var responseJson = json.decode(response.body.toString());
+        print(responseJson);
+        return responseJson;
     }
-    throw Exception("Failed to load load  2");
-  }
-
-  Future<List<dynamic>> fetchData() async {
-    try {
-      await pos;
-      var uri1 =
-          Uri.parse(prepareWeatherUrl(position.longitude!, position.latitude!));
-      var uri2 = Uri.parse(
-          prepareHourlyWeather(position.longitude!, position.latitude!));
-      var responses = await Future.wait([
-        http.get(uri1, headers: {'Content-Type': 'application/json'}),
-        http.get(uri2, headers: {'Content-Type': 'application/json'}),
-      ]);
-      return <dynamic>[
-        ..._getCurrentWeatherResponse(responses[0]),
-        ..._getHourlyWeatherResponse(responses[1]),
-      ];
-    } catch (e) {
-      throw 'Error';
-    }
-  }
-
-  List<CurrentWeather> _getCurrentWeatherResponse(http.Response response) {
-    return [
-      if (response.statusCode == 200)
-        for (var i in json.decode(response.body))
-          CurrentWeather.fromJson(json.decode(i)),
-    ];
-  }
-
-  List<HourlyWeather> _getHourlyWeatherResponse(http.Response response) {
-    return [
-      if (response.statusCode == 200)
-        for (var i in json.decode(response.body))
-          HourlyWeather.fromJson(json.decode(i)),
-    ];
   }
 }

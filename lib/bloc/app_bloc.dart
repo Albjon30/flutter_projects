@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prototype/bloc/app_state.dart';
 import 'package:prototype/bloc/app_events.dart';
 import 'package:prototype/api/api_repository.dart';
+import 'dart:developer' as devtools show log;
 
-import 'package:prototype/location/location.dart';
 
 enum LoginErrors { invalidHandle }
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({Duration? waitBeforeLoading}) : super(AppInitial()) {
@@ -21,13 +25,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         );
         try {
           final currentData = await apiRepository.fetchCurrentList();
-          // final currentData = await apiRepository.fetchList();
           emit(
             AppCurrentWeatherLoaded(
               currentWeather: currentData,
             ),
           );
-          
         } catch (e) {
           emit(
             AppError(

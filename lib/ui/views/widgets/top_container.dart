@@ -6,7 +6,6 @@ import 'package:prototype/models/current_weather.dart';
 import 'package:prototype/ui/views/widgets/top_view_header.dart';
 import 'package:prototype/utils/icon_selection.dart';
 
-
 Widget topCard(BuildContext context, CurrentWeather cWeather) {
   bool selected = false;
   var date = DateTime.now();
@@ -76,12 +75,12 @@ Widget topCard(BuildContext context, CurrentWeather cWeather) {
                             ? MediaQuery.of(context).size.height * 0.40
                             : MediaQuery.of(context).size.height * 0.59,
                         child: topView(
-                          cWeather.main!.temp.toStringAsFixed(1) ,
+                          cWeather.main!.temp.toStringAsFixed(1),
                           cWeather.weather![0].description.toString(),
                           DateFormat('EEEE, d MMM').format(date),
-                          cWeather.wind!.speed.toStringAsFixed(1) ,
+                          cWeather.wind!.speed.toStringAsFixed(1),
                           cWeather.main!.humidity.toString(),
-                          getWeatherIcon('${cWeather.weather![0].icon}'),
+                          getWeatherIcon(cWeather.weather![0].icon),
                         ),
                       ),
                     ],
@@ -104,7 +103,7 @@ Widget topCard(BuildContext context, CurrentWeather cWeather) {
                           const SizedBox(
                             height: 35,
                           ),
-                          topViewCollapsed(cWeather.weather![0].icon ),
+                          topViewCollapsed(cWeather.weather![0].icon),
                         ],
                       )
                     ],
