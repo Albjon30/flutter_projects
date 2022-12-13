@@ -30,8 +30,6 @@ import 'package:prototype/models/hourly_weather.dart';
 abstract class AppState {
   const AppState();
 
-  @override
-  List<Object?> get props => [];
 }
 
 @immutable
@@ -64,3 +62,5 @@ class AppError extends AppState {
   final Object? messageError;
   const AppError({required this.messageError});
 }
+
+class ItemsStateRefreshing extends AppState {}

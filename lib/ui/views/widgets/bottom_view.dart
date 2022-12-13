@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prototype/models/hourly_weather.dart';
 import 'package:prototype/utils/icon_selection.dart';
-import 'package:prototype/service/weather_service.dart';
 
 Widget bottomCard(BuildContext context, HourlyWeather hourlyWeather) {
   return Container(

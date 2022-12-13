@@ -7,7 +7,7 @@ import 'package:prototype/ui/views/widgets/top_view_header.dart';
 import 'package:prototype/utils/icon_selection.dart';
 
 Widget topCard(BuildContext context, CurrentWeather cWeather) {
-  bool selected = false;
+  var selected = false;
   var date = DateTime.now();
   var _didFinishAnimating = false;
 

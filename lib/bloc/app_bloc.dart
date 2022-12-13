@@ -1,10 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:prototype/bloc/app_state.dart';
 import 'package:prototype/bloc/app_events.dart';
 import 'package:prototype/api/api_repository.dart';
 import 'dart:developer' as devtools show log;
-
 
 enum LoginErrors { invalidHandle }
 

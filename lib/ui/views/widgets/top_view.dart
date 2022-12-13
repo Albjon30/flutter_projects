@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 Widget topView(
-   String tmp,
-   String description,
-   String day,
-   String wind,
-   String humidity,
-  String getIcon,
-
+  String? tmp,
+  String? description,
+  String? day,
+  String? wind,
+  String? humidity,
+  String? getIcon,
 ) {
   return Column(
-    
     children: [
       const SizedBox(
-        height: 30,
+        height: 24,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +20,7 @@ Widget topView(
             width: 308,
             height: 170,
             child: Image.asset(
-              getIcon,
+              getIcon!,
               scale: 13,
             ),
           )
@@ -34,19 +32,19 @@ Widget topView(
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(tmp,
+          Text(tmp!,
               style: const TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
               textAlign: TextAlign.center),
-          Text(description,
+          Text(description!,
               style: const TextStyle(
                 fontSize: 24,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center),
-          Text(day,
+          Text(day!,
               style: const TextStyle(
                 fontSize: 15,
                 color: Color.fromRGBO(255, 255, 255, 0.42),
@@ -112,7 +110,7 @@ Widget topView(
                 color: Colors.white,
               ),
               Text(
-                '$wind %',
+                '$humidity %',
                 style: const TextStyle(
                   fontSize: 15,
                   color: Color.fromRGBO(255, 255, 255, 0.42),

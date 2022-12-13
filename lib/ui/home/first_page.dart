@@ -21,19 +21,23 @@ class FirstPage extends StatefulWidget {
   State<FirstPage> createState() => _FirstPageState();
 }
 
-
 class _FirstPageState extends State<FirstPage> {
   final AppBloc _appBloc = AppBloc();
 
   @override
   void initState() {
-    _appBloc.add(const LoadCurrentWeatherEvent(),);
-    _appBloc.add(const LoadHourlyWeatherEvent(),);
+    _appBloc.add(
+      const LoadCurrentWeatherEvent(),
+    );
+    _appBloc.add(
+      const LoadHourlyWeatherEvent(),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -43,12 +47,12 @@ class _FirstPageState extends State<FirstPage> {
             providers: [
               BlocProvider<TopBloc>(
                 create: (_) => TopBloc(
-                  waitBeforeLoading:const Duration(seconds: 2),
+                  waitBeforeLoading: const Duration(seconds: 1),
                 ),
               ),
               BlocProvider<BottomBloc>(
                 create: (_) => BottomBloc(
-                  waitBeforeLoading:const Duration(seconds: 2),
+                  waitBeforeLoading: const Duration(seconds: 1),
                 ),
               ),
             ],
@@ -56,7 +60,7 @@ class _FirstPageState extends State<FirstPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                children: const [
+                children:  [
                   TopBlocView<TopBloc>(),
                   BottomBlocView<BottomBloc>(),
                 ],
@@ -66,48 +70,5 @@ class _FirstPageState extends State<FirstPage> {
         ),
       ),
     );
-    // BlocProvider(
-    //   create: (_) => _appBloc,
-    //   child: Scaffold(
-    //     body: Column(
-    //       children: [
-    //         BlocListener<AppBloc, AppState>(
-    //           listener: (context, appState) {
-
-    //             if (appState is AppError) {
-    //               showGenericDialog(
-    //                 context: context,
-    //                 title: 'Error',
-    //                 content: "Noo data",
-    //                 optionBuilder: () => {
-    //                   "Ok": true,
-    //                 },
-    //               );
-    //             }
-    //           },
-    //           child: BlocBuilder<AppBloc, AppState>(
-    //             builder: ((context, state) {
-    //                if (state is AppLoading) {
-    //               // LoadingScreen.instance().show(
-    //               //   context: context,
-    //               //   text: 'Please Wait...',
-    //               // );
-    //               CircularProgressIndicator();
-    //             } else {
-    //               Container();
-    //             }
-    //               if (state is AppLoaded) {
-    //                 // return _buildCard(context, state.hourlyModel);
-    //                return TopCard(context, state.currentWeather);
-    //                  BottomCard(context, state.hourlyWeather);
-    //               }
-    //               return Container();
-    //             }),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
