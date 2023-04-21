@@ -1,8 +1,9 @@
+import 'package:prototype/data/location/location.dart';
 import 'package:prototype/models/weather.dart';
 import 'package:prototype/service/weather_service.dart';
 import 'package:prototype/models/current_weather.dart';
 import 'package:prototype/models/hourly_weather.dart';
-import 'package:prototype/location/location.dart';
+import 'package:prototype/data/location/location.dart';
 
 abstract class ApiProtocol {
   const ApiProtocol();
