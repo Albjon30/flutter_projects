@@ -1,8 +1,7 @@
 import 'package:location/location.dart';
 
-class PositionRepository {
-  /// {@macro location_repository}
-   String? latitude;
+class Position {
+  String? latitude;
   String? longitude;
 
   Future<void> getUserLocation() async {
@@ -15,7 +14,7 @@ class PositionRepository {
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        return ;
+        return;
       }
     }
 
@@ -31,5 +30,8 @@ class PositionRepository {
     final locationData = await location.getLocation();
      latitude = locationData.latitude?.toStringAsFixed(1);
      longitude = locationData.longitude?.toStringAsFixed(1);
+    // setState(() {
+    //   _userLocation = _locationData;
+    // });
   }
 }
