@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:prototype/ui/home/first_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home:  const SafeArea(
+      home:const SafeArea(
         child: FirstPage(),
       ),
     );
